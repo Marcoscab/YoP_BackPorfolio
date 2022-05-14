@@ -15,18 +15,11 @@ public class PersonaService implements IPersonaService {
     @Override
     public Persona findPersonaById(Long id) {
         return personaRepo.findById(id).orElse(null);
-    
     }
 
     @Override
     public void editPersona(Persona persona) {
-               
         personaRepo.save(persona);
-          
-        
     }
-
-    
-
 
 }
