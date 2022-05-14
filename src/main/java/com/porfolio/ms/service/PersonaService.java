@@ -2,7 +2,6 @@ package com.porfolio.ms.service;
 
 import com.porfolio.ms.model.Persona;
 import com.porfolio.ms.repository.PersonaRepo;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ public class PersonaService implements IPersonaService {
 
     //Realizamos inyeccion de dependecia
     @Autowired
-    public PersonaRepo personaRepo;
+    private PersonaRepo personaRepo;
 
     //Metodo para buscar por id, en caso q no se encuentre devuelve null
     @Override
