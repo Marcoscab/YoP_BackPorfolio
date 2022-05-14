@@ -1,13 +1,18 @@
 package com.porfolio.ms.controller;
 
+import com.porfolio.ms.model.Certificado;
 import com.porfolio.ms.model.Persona;
+import com.porfolio.ms.service.CertificadoService;
 import com.porfolio.ms.service.PersonaService;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,6 +27,10 @@ public class Controller {
     @Autowired
     private PersonaService personaService;
 
+    @Autowired
+    private CertificadoService certificadoService;
+
+    //-----------METODOS PERSONA--------------------------------------------------------------//
     //Metodo para traer los datos de la persona
     @GetMapping("/{id}")
     @ResponseBody //Esta anotation indica que devulva la Persona en formato Json serializado
@@ -47,7 +56,7 @@ public class Controller {
         Persona per = personaService.findPersonaById(id);
 
         //actaulizo con los datos recibidos siempre y cuando tengan info nueva
-        per.setNombre(nombre);               
+        per.setNombre(nombre);
         per.setApellido(apellido);
         per.setAcerca_de(acerca_de);
         per.setDomicilio(domicilio);
@@ -60,6 +69,43 @@ public class Controller {
         //Llamo al servicio para actualizar.
         personaService.editPersona(per);
         return per;
+
+    }
+
+    //-----------METODOS CERTIFICADO--------------------------------------------------------------//
+    
+    //Busca todos los certificados
+    @GetMapping("/certificado/all")
+    @ResponseBody
+    public List<Certificado> getAllCertidicado() {
+        
+        return certificadoService.findAll();
+
+    }
+    
+    //Busca un certificado por id
+    @GetMapping("/certificado/{id}")
+    @ResponseBody
+    public Certificado getCertificado(@PathVariable Long id){
+        return certificadoService.findCertificadoById(id);
+    }
+    
+    //Crea un certificado
+    @PostMapping("/certificado/add")
+    public Certificado addCertificad(@RequestBody Certificado cer){
+        
+        certificadoService.createCertificado(cer);
+        return cer;
+    }
+    
+    //Actualiza un certidicado
+    @PutMapping("/certificado/edit/{id}")
+    public Certificado updateCertificado(@PathVariable Long id, @RequestParam String cer){
+        
+        Certificado certificado = certificadoService.findCertificadoById(id);
+        certificado.setCertificado(cer);
+        certificadoService.editCertificado(certificado);
+        return  certificado;
         
     }
 
