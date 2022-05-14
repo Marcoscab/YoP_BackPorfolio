@@ -13,6 +13,7 @@ public class PersonaService implements IPersonaService {
     @Autowired
     public PersonaRepo personaRepo;
 
+    //Metodo para buscar por id, en caso q no se encuentre devuelve null
     @Override
     public Persona findPersonadById(Long id) {
         return personaRepo.findById(id).orElse(null);
