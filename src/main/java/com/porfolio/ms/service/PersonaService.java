@@ -12,10 +12,21 @@ public class PersonaService implements IPersonaService {
     @Autowired
     private PersonaRepo personaRepo;
 
-    //Metodo para buscar por id, en caso q no se encuentre devuelve null
     @Override
-    public Persona findPersonadById(Long id) {
+    public Persona findPersonaById(Long id) {
         return personaRepo.findById(id).orElse(null);
+    
     }
+
+    @Override
+    public void editPersona(Persona persona) {
+               
+        personaRepo.save(persona);
+          
+        
+    }
+
+    
+
 
 }

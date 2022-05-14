@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity //mapeamos la clase a una tabla en la DB.
 public class Persona implements Serializable{
@@ -18,6 +19,7 @@ public class Persona implements Serializable{
     private Long id;
     private String nombre;
     private String apellido;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha_nacimiento;
     private String profesion;
