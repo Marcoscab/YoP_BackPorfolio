@@ -10,6 +10,7 @@ public interface ICertificadoService {
     public Certificado findCertificadoById(Long id);
     public void createCertificado(Certificado cer);
     public void editCertificado(Certificado cer);
+    public void deleteCertificado(Long id);
     
     
         

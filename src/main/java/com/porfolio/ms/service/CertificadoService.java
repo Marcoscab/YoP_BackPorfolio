@@ -33,5 +33,10 @@ public class CertificadoService implements ICertificadoService{
     public void editCertificado(Certificado cer) {
         this.certificadoRepo.save(cer);
     }
+
+    @Override
+    public void deleteCertificado(Long id) {
+        certificadoRepo.deleteById(id);
+    }
     
 }

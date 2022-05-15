@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class Controller {
     //Inyecto el Servicio de persona
     @Autowired
     private PersonaService personaService;
-
+    
     @Autowired
     private CertificadoService certificadoService;
 
@@ -35,7 +36,7 @@ public class Controller {
     @GetMapping("/{id}")
     @ResponseBody //Esta anotation indica que devulva la Persona en formato Json serializado
     public Persona getPersona(@PathVariable Long id) {
-
+        
         return personaService.findPersonaById(id);
     }
 
@@ -69,44 +70,51 @@ public class Controller {
         //Llamo al servicio para actualizar.
         personaService.editPersona(per);
         return per;
-
+        
     }
 
     //-----------METODOS CERTIFICADO--------------------------------------------------------------//
-    
     //Busca todos los certificados
     @GetMapping("/certificado/all")
     @ResponseBody
     public List<Certificado> getAllCertidicado() {
         
         return certificadoService.findAll();
-
+        
     }
-    
+
     //Busca un certificado por id
     @GetMapping("/certificado/{id}")
     @ResponseBody
-    public Certificado getCertificado(@PathVariable Long id){
+    public Certificado getCertificado(@PathVariable Long id) {
         return certificadoService.findCertificadoById(id);
     }
-    
+
     //Crea un certificado
     @PostMapping("/certificado/add")
-    public Certificado addCertificad(@RequestBody Certificado cer){
+    public Certificado addCertificad(@RequestBody Certificado cer) {
         
         certificadoService.createCertificado(cer);
         return cer;
     }
-    
+
     //Actualiza un certidicado
     @PutMapping("/certificado/edit/{id}")
-    public Certificado updateCertificado(@PathVariable Long id, @RequestParam String cer){
+    public Certificado updateCertificado(@PathVariable Long id, @RequestParam String cer) {
         
         Certificado certificado = certificadoService.findCertificadoById(id);
         certificado.setCertificado(cer);
         certificadoService.editCertificado(certificado);
-        return  certificado;
+        return certificado;
         
     }
 
+    //Borra Certificado
+    @DeleteMapping("/certificado/delete/{id}")
+    public void deleteCertificado(@PathVariable Long id) {
+        
+        certificadoService.deleteCertificado(id);
+        
+    }
+    
 }
