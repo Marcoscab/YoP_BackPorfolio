@@ -70,8 +70,32 @@ public class Controller {
         //Llamo al servicio para actualizar.
         personaService.editPersona(per);
         return per;
+     
+    }
+      //Metodo para actualizar Persona
+    @PutMapping("/editar2/{id}")
+    public Persona update2Persona(@PathVariable("id") Long id, @RequestBody Persona persona){
+        //Busco la persona y actualizo con los datos recibidos.                      
+        Persona per = personaService.findPersonaById(id);
+
+        //actaulizo con los datos recibidos siempre y cuando tengan info nueva
+        per.setNombre(persona.getNombre());
+        per.setApellido(persona.getApellido());
+        per.setAcerca_de(persona.getAcerca_de());
+        per.setDomicilio(persona.getDomicilio());
+        per.setEmpresa_actual(persona.getEmpresa_actual());
+        per.setProfesion(persona.getProfesion());
+        per.setUrl_foto_perfil(persona.getUrl_foto_perfil());
+        per.setUrl_banner(persona.getUrl_banner());
+        per.setFecha_nacimiento(persona.getFecha_nacimiento());
+
+        //Llamo al servicio para actualizar.
+        personaService.editPersona(per);
+        return per;
+        
         
     }
+    
 
     //-----------METODOS CERTIFICADO--------------------------------------------------------------//
     //Busca todos los certificados
