@@ -2,8 +2,10 @@ package com.porfolio.ms.controller;
 
 import com.porfolio.ms.model.Certificado;
 import com.porfolio.ms.model.Persona;
+import com.porfolio.ms.model.User;
 import com.porfolio.ms.service.CertificadoService;
 import com.porfolio.ms.service.PersonaService;
+import com.porfolio.ms.service.UserService;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/porfolio")
 public class Controller {
 
-    //Inyecto el Servicio de persona
+    //Inyecto los Servicios
     @Autowired
     private PersonaService personaService;
     
     @Autowired
     private CertificadoService certificadoService;
+    
+    @Autowired
+    private UserService userService;
 
     //-----------METODOS PERSONA--------------------------------------------------------------//
     //Metodo para traer los datos de la persona
@@ -140,5 +145,18 @@ public class Controller {
         certificadoService.deleteCertificado(id);
         
     }
+    
+    
+    
+      //-----------METODOS USER--------------------------------------------------------------//
+    @GetMapping("/user/{id}")
+    public User getUser(@PathVariable("id") Long id){
+        
+        return userService.findUserById(id);
+        
+    }
+    
+    
+    
     
 }
