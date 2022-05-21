@@ -21,6 +21,13 @@ public class Certificado implements Serializable{
     public Certificado() {
     }
 
+    public Certificado(Long id, String certificado) {
+        this.id = id;
+        this.certificado = certificado;
+    }
+    
+    
+
     public Long getId() {
         return id;
     }

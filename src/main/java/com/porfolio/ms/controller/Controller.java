@@ -1,9 +1,11 @@
 package com.porfolio.ms.controller;
 
 import com.porfolio.ms.model.Certificado;
+import com.porfolio.ms.model.Experiencia;
 import com.porfolio.ms.model.Persona;
 import com.porfolio.ms.model.User;
 import com.porfolio.ms.service.CertificadoService;
+import com.porfolio.ms.service.ExperienciaService;
 import com.porfolio.ms.service.PersonaService;
 import com.porfolio.ms.service.UserService;
 import java.util.Date;
@@ -29,19 +31,22 @@ public class Controller {
     //Inyecto los Servicios
     @Autowired
     private PersonaService personaService;
-    
+
     @Autowired
     private CertificadoService certificadoService;
-    
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ExperienciaService experienciaService;
 
     //-----------METODOS PERSONA--------------------------------------------------------------//
     //Metodo para traer los datos de la persona
     @GetMapping("/{id}")
     @ResponseBody //Esta anotation indica que devulva la Persona en formato Json serializado
     public Persona getPersona(@PathVariable Long id) {
-        
+
         return personaService.findPersonaById(id);
     }
 
@@ -75,11 +80,12 @@ public class Controller {
         //Llamo al servicio para actualizar.
         personaService.editPersona(per);
         return per;
-     
+
     }
-      //Metodo para actualizar Persona
+
+//Metodo para actualizar Persona
     @PutMapping("/editar2/{id}")
-    public Persona update2Persona(@PathVariable("id") Long id, @RequestBody Persona persona){
+    public Persona update2Persona(@PathVariable("id") Long id, @RequestBody Persona persona) {
         //Busco la persona y actualizo con los datos recibidos.                      
         Persona per = personaService.findPersonaById(id);
 
@@ -97,19 +103,17 @@ public class Controller {
         //Llamo al servicio para actualizar.
         personaService.editPersona(per);
         return per;
-        
-        
+
     }
-    
 
     //-----------METODOS CERTIFICADO--------------------------------------------------------------//
     //Busca todos los certificados
     @GetMapping("/certificado/all")
     @ResponseBody
     public List<Certificado> getAllCertidicado() {
-        
+
         return certificadoService.findAll();
-        
+
     }
 
     //Busca un certificado por id
@@ -122,41 +126,71 @@ public class Controller {
     //Crea un certificado
     @PostMapping("/certificado/add")
     public Certificado addCertificad(@RequestBody Certificado cer) {
-        
+
         certificadoService.createCertificado(cer);
         return cer;
     }
 
     //Actualiza un certidicado
     @PutMapping("/certificado/edit/{id}")
-    public Certificado updateCertificado(@PathVariable Long id, @RequestParam String cer) {
-        
+    @ResponseBody
+    public Certificado updateCertificado(@PathVariable Long id, @RequestBody Certificado cer) {
+
         Certificado certificado = certificadoService.findCertificadoById(id);
-        certificado.setCertificado(cer);
+        certificado.setCertificado(cer.getCertificado());
         certificadoService.editCertificado(certificado);
         return certificado;
-        
+
     }
 
     //Borra Certificado
     @DeleteMapping("/certificado/delete/{id}")
     public void deleteCertificado(@PathVariable Long id) {
-        
+
         certificadoService.deleteCertificado(id);
-        
+
     }
-    
-    
-    
-      //-----------METODOS USER--------------------------------------------------------------//
+
+    //-----------METODOS USER--------------------------------------------------------------//
     @GetMapping("/user/{id}")
-    public User getUser(@PathVariable("id") Long id){
-        
+    @ResponseBody
+    public User getUser(@PathVariable("id") Long id) {
+
         return userService.findUserById(id);
-        
+
+    }
+
+    //-----------METODOS EXPERIENCIA--------------------------------------------------------------//
+    @GetMapping("/experiencia/all")
+    @ResponseBody
+    public List<Experiencia> getAllExperciencia() {
+
+        return this.experienciaService.findAll();
+    }
+
+    @GetMapping("/experiencia/{id}")
+    public Experiencia getExperienciaById(@PathVariable("id") Long id) {
+
+        return experienciaService.findExperienciaById(id);
     }
     
+    @PostMapping("/experiencia/add")
+    public void addExperiencia(@RequestBody Experiencia exp){
+        
+        experienciaService.createExperiencia(exp);
+    }
     
+    @PutMapping("/experiencia/edit/{id}")
+    public void updateExperiencia(@PathVariable Long id, Experiencia exp){
+        
+        experienciaService.editExperiencia(exp);
+    }
     
+    @DeleteMapping("/experiencia/delete/{id}")
+    public void deleteExpericencia(@PathVariable Long id){
+        
+        experienciaService.deleteExperiencia(id);
+    }
     
+
 }
