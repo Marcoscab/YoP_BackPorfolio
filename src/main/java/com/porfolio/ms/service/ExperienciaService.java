@@ -4,12 +4,13 @@ package com.porfolio.ms.service;
 import com.porfolio.ms.model.Experiencia;
 import com.porfolio.ms.repository.ExperienciaRepo;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ExperienciaService implements IExperienciaService{
 
-    
+    @Autowired
     private ExperienciaRepo experienciaRepo;
     
     
