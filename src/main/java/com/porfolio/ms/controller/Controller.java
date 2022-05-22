@@ -1,10 +1,12 @@
 package com.porfolio.ms.controller;
 
 import com.porfolio.ms.model.Certificado;
+import com.porfolio.ms.model.Educacion;
 import com.porfolio.ms.model.Experiencia;
 import com.porfolio.ms.model.Persona;
 import com.porfolio.ms.model.User;
 import com.porfolio.ms.service.CertificadoService;
+import com.porfolio.ms.service.EducacionService;
 import com.porfolio.ms.service.ExperienciaService;
 import com.porfolio.ms.service.PersonaService;
 import com.porfolio.ms.service.UserService;
@@ -31,22 +33,25 @@ public class Controller {
     //Inyecto los Servicios
     @Autowired
     private PersonaService personaService;
-
+    
     @Autowired
     private CertificadoService certificadoService;
-
+    
     @Autowired
     private UserService userService;
-
+    
     @Autowired
     private ExperienciaService experienciaService;
+    
+    @Autowired
+    private EducacionService educacionService;
 
     //-----------METODOS PERSONA--------------------------------------------------------------//
     //Metodo para traer los datos de la persona
     @GetMapping("/{id}")
     @ResponseBody //Esta anotation indica que devulva la Persona en formato Json serializado
     public Persona getPersona(@PathVariable Long id) {
-
+        
         return personaService.findPersonaById(id);
     }
 
@@ -80,7 +85,7 @@ public class Controller {
         //Llamo al servicio para actualizar.
         personaService.editPersona(per);
         return per;
-
+        
     }
 
 //Metodo para actualizar Persona
@@ -103,7 +108,7 @@ public class Controller {
         //Llamo al servicio para actualizar.
         personaService.editPersona(per);
         return per;
-
+        
     }
 
     //-----------METODOS CERTIFICADO--------------------------------------------------------------//
@@ -111,9 +116,9 @@ public class Controller {
     @GetMapping("/certificado/all")
     @ResponseBody
     public List<Certificado> getAllCertidicado() {
-
+        
         return certificadoService.findAll();
-
+        
     }
 
     //Busca un certificado por id
@@ -126,7 +131,7 @@ public class Controller {
     //Crea un certificado
     @PostMapping("/certificado/add")
     public Certificado addCertificad(@RequestBody Certificado cer) {
-
+        
         certificadoService.createCertificado(cer);
         return cer;
     }
@@ -135,62 +140,94 @@ public class Controller {
     @PutMapping("/certificado/edit/{id}")
     @ResponseBody
     public Certificado updateCertificado(@PathVariable Long id, @RequestBody Certificado cer) {
-
+        
         Certificado certificado = certificadoService.findCertificadoById(id);
         certificado.setCertificado(cer.getCertificado());
         certificadoService.editCertificado(certificado);
         return certificado;
-
+        
     }
 
     //Borra Certificado
     @DeleteMapping("/certificado/delete/{id}")
     public void deleteCertificado(@PathVariable Long id) {
-
+        
         certificadoService.deleteCertificado(id);
-
+        
     }
 
     //-----------METODOS USER--------------------------------------------------------------//
     @GetMapping("/user/{id}")
     @ResponseBody
     public User getUser(@PathVariable("id") Long id) {
-
+        
         return userService.findUserById(id);
-
+        
     }
 
     //-----------METODOS EXPERIENCIA--------------------------------------------------------------//
     @GetMapping("/experiencia/all")
     @ResponseBody
     public List<Experiencia> getAllExperciencia() {
-
+        
         return this.experienciaService.findAll();
     }
-
+    
     @GetMapping("/experiencia/{id}")
+    @ResponseBody
     public Experiencia getExperienciaById(@PathVariable("id") Long id) {
-
+        
         return experienciaService.findExperienciaById(id);
     }
     
     @PostMapping("/experiencia/add")
-    public void addExperiencia(@RequestBody Experiencia exp){
+    public void addExperiencia(@RequestBody Experiencia exp) {
         
         experienciaService.createExperiencia(exp);
     }
     
     @PutMapping("/experiencia/edit/{id}")
-    public void updateExperiencia(@PathVariable Long id, Experiencia exp){
+    public void updateExperiencia(@PathVariable Long id, Experiencia exp) {
         
         experienciaService.editExperiencia(exp);
     }
     
     @DeleteMapping("/experiencia/delete/{id}")
-    public void deleteExpericencia(@PathVariable Long id){
+    public void deleteExpericencia(@PathVariable Long id) {
         
         experienciaService.deleteExperiencia(id);
     }
-    
 
+//-----------METODOS EDUCACION--------------------------------------------------------------//
+    @GetMapping("/educacion/all")
+    @ResponseBody
+    public List<Educacion> getAllEducacion() {
+        return educacionService.findAll();
+    }
+    
+    @GetMapping("/educacion/{id}")
+    @ResponseBody
+    public Educacion getEducacionById(@PathVariable("id") Long id) {
+        
+        return educacionService.findEducacionById(id);
+    }
+    
+    @PostMapping("/educacion/add")
+    public void addEducacion(@RequestBody Educacion edu) {
+        
+        educacionService.createEducacion(edu);
+    }
+    
+    @PutMapping("/educacion/edit/{id}")
+    public void updateEducacion(@PathVariable Long id, Educacion edu) {
+        
+        educacionService.editEducacion(edu);
+    }
+    
+    @DeleteMapping("/educacion/delete/{id}")
+    public void deleteEducacion(@PathVariable Long id) {
+        
+        educacionService.deleteEducacion(id);
+    }
+    
 }
