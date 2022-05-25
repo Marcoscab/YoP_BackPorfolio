@@ -7,6 +7,7 @@ import com.porfolio.ms.model.HerramientaInformatica;
 import com.porfolio.ms.model.Idioma;
 import com.porfolio.ms.model.LenguajeProgramacion;
 import com.porfolio.ms.model.Persona;
+import com.porfolio.ms.model.Proyecto;
 import com.porfolio.ms.model.User;
 import com.porfolio.ms.service.CertificadoService;
 import com.porfolio.ms.service.EducacionService;
@@ -15,11 +16,10 @@ import com.porfolio.ms.service.HerramientaInformaticaService;
 import com.porfolio.ms.service.IdiomaService;
 import com.porfolio.ms.service.LenguajeProgramacionService;
 import com.porfolio.ms.service.PersonaService;
+import com.porfolio.ms.service.ProyectoService;
 import com.porfolio.ms.service.UserService;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,6 +59,9 @@ public class Controller {
     
     @Autowired
     private HerramientaInformaticaService herramientaService;
+    
+    @Autowired
+    private ProyectoService proyectoService;
 
     //-----------METODOS PERSONA--------------------------------------------------------------//
     //Metodo para traer los datos de la persona
@@ -341,5 +343,39 @@ public class Controller {
         
         herramientaService.deleteHerramientaInformatica(id);
     }
+    
+      //-----------METODOS PROYECTOS--------------------------------------------------------------//
+    @GetMapping("/proyecto/all")
+    @ResponseBody
+    public List<Proyecto> getAllProyecto() {
+        return proyectoService.findAll();
+    }
+    
+    @GetMapping("/proyecto/{id}")
+    @ResponseBody
+    public Proyecto getProyectoById(@PathVariable("id") Long id) {
+        
+        return proyectoService.findProyectoById(id);
+    }
+    
+    @PostMapping("/proyecto/add")
+    public void addProyecto(@RequestBody Proyecto proyecto) {
+        
+       proyectoService.createProyecto(proyecto);
+    }
+    
+    @PutMapping("/proyecto/edit/{id}")
+    public void updateProyecto(@PathVariable Long id, @RequestBody Proyecto proyecto) {
+        
+        proyectoService.editProyecto(proyecto);
+    }
+    
+    @DeleteMapping("/proyecto/delete/{id}")
+    public void deleteProyecto(@PathVariable Long id) {   
+        proyectoService.deleteProyecto(id);
+    }
+    
+    
+    
     
 }
