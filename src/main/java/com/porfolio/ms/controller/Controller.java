@@ -3,6 +3,7 @@ package com.porfolio.ms.controller;
 import com.porfolio.ms.model.Certificado;
 import com.porfolio.ms.model.Educacion;
 import com.porfolio.ms.model.Experiencia;
+import com.porfolio.ms.model.HerramientaInformatica;
 import com.porfolio.ms.model.Idioma;
 import com.porfolio.ms.model.LenguajeProgramacion;
 import com.porfolio.ms.model.Persona;
@@ -10,6 +11,7 @@ import com.porfolio.ms.model.User;
 import com.porfolio.ms.service.CertificadoService;
 import com.porfolio.ms.service.EducacionService;
 import com.porfolio.ms.service.ExperienciaService;
+import com.porfolio.ms.service.HerramientaInformaticaService;
 import com.porfolio.ms.service.IdiomaService;
 import com.porfolio.ms.service.LenguajeProgramacionService;
 import com.porfolio.ms.service.PersonaService;
@@ -55,6 +57,9 @@ public class Controller {
     
     @Autowired
     private LenguajeProgramacionService lenguajeService;
+    
+    @Autowired
+    private HerramientaInformaticaService herramientaService;
 
     //-----------METODOS PERSONA--------------------------------------------------------------//
     //Metodo para traer los datos de la persona
@@ -302,6 +307,39 @@ public class Controller {
     public void deleteLenguaje(@PathVariable Long id) {
         
         lenguajeService.deleteLenguajeProgramacion(id);
+    }
+    
+    
+    //-----------METODOS HABILIDADES HERRAMIENTA INFORMATICA--------------------------------------------------------------//
+    @GetMapping("/habilidad/herramienta/all")
+    @ResponseBody
+    public List<HerramientaInformatica> getAllHerramienta() {
+        return herramientaService.findAll();
+    }
+    
+    @GetMapping("/habilidad/herramienta/{id}")
+    @ResponseBody
+    public HerramientaInformatica getHerramientaById(@PathVariable("id") Long id) {
+        
+        return herramientaService.findHerramientaInformaticaById(id);
+    }
+    
+    @PostMapping("/habilidad/herramienta/add")
+    public void addHerramienta(@RequestBody HerramientaInformatica herramienta) {
+        
+        herramientaService.createHerramientaInformatica(herramienta);
+    }
+    
+    @PutMapping("/habilidad/herramienta/edit/{id}")
+    public void updateHerramienta(@PathVariable Long id, @RequestBody HerramientaInformatica herramienta) {
+        
+        herramientaService.editHerramientaInformatica(herramienta);
+    }
+    
+    @DeleteMapping("/habilidad/herramienta/delete/{id}")
+    public void deleteHerramienta(@PathVariable Long id) {
+        
+        herramientaService.deleteHerramientaInformatica(id);
     }
     
 }
