@@ -375,7 +375,4 @@ public class Controller {
         proyectoService.deleteProyecto(id);
     }
     
-    
-    
-    
 }
